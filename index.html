@@ -1,75 +1,873 @@
-<section id="building">
-  <div class="wrap">
-    <div class="eyebrow">currently building</div>
-    <h2 class="title reveal">In Progress</h2>
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thulasidharan V S — AI Evaluation · QA Automation · Cloud &amp; DevOps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e1013;
+    --surface:#171a20;
+    --surface-2:#1e222a;
+    --text:#edeae1;
+    --text-muted:#8b909c;
+    --text-dim:#5b606c;
+    --amber:#f2a93b;
+    --teal:#4fd1ae;
+    --red:#e8604f;
+    --rule:#2a2e37;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
 
-    <div class="build-grid">
+  *{margin:0;padding:0;box-sizing:border-box;}
 
-      <div class="build-card reveal">
-        <button class="badge badge-btn active"
-                aria-expanded="false"
-                aria-controls="detail-voltsight">
-          active <span class="chev">▾</span>
-        </button>
+  html{scroll-behavior:smooth;}
 
-        <h3>VoltSight — Predictive Maintenance Platform for Electric Motors</h3>
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
 
-        <p>
-          VoltSight is a collaborative IoT platform being built to detect early
-          signs of electric motor failure before breakdowns occur. Using an ESP32,
-          industrial sensors, a FastAPI backend, PostgreSQL, and a React dashboard,
-          the system continuously monitors motor health and provides real-time
-          analytics and maintenance alerts.
-        </p>
+  ::selection{background:var(--amber);color:#0e1013;}
 
-        <div class="build-meta">
-          <span><b>Type</b> · IoT + Cloud + Full Stack</span>
-          <span><b>Status</b> · Architecture & Development</span>
-          <span><b>Team</b> · 2 Developers (CSE + EEE)</span>
+  a{color:inherit;text-decoration:none;}
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- background grid texture ---------- */
+  .bg-grid{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    background:rgba(14,16,19,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--rule);
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:64px;
+  }
+  .brand{
+    font-family:var(--mono);
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:0.02em;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .brand .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 8px var(--teal);
+    animation:blink 2.4s ease-in-out infinite;
+  }
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.35;}}
+  .navlinks{display:flex;gap:28px;font-family:var(--mono);font-size:12.5px;}
+  .navlinks a{color:var(--text-muted);letter-spacing:0.04em;text-transform:uppercase;transition:color .2s;position:relative;}
+  .navlinks a:hover, .navlinks a:focus-visible{color:var(--text);}
+  .navlinks a::before{content:'./';color:var(--text-dim);}
+  .navtoggle{display:none;}
+
+  @media(max-width:720px){
+    .navlinks{display:none;}
+  }
+
+  /* ---------- section scaffolding ---------- */
+  section{
+    padding:120px 0 96px;
+    border-bottom:1px solid var(--rule);
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--amber);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{content:'//';color:var(--text-dim);}
+  h2.title{
+    font-family:var(--mono);
+    font-size:clamp(28px,4vw,38px);
+    font-weight:700;
+    letter-spacing:-0.01em;
+    margin-bottom:44px;
+    color:var(--text);
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- hero ---------- */
+  #hero{
+    padding:168px 0 90px;
+    border-bottom:1px solid var(--rule);
+  }
+  .hero-solo{
+    max-width:760px;
+  }
+  .kicker-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+  .kicker{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--teal);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin-bottom:0;
+  }
+  h1{
+    font-family:var(--mono);
+    font-size:clamp(34px,5.4vw,58px);
+    font-weight:700;
+    line-height:1.08;
+    letter-spacing:-0.015em;
+    margin-bottom:22px;
+  }
+  h1 .accent{color:var(--amber);}
+  .lede{
+    font-size:17px;
+    color:var(--text-muted);
+    max-width:52ch;
+    margin-bottom:32px;
+  }
+  .lede strong{color:var(--text);font-weight:600;}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono);
+    font-size:13px;
+    padding:12px 20px;
+    border-radius:3px;
+    border:1px solid var(--rule);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:border-color .2s, color .2s, transform .15s;
+  }
+  .btn-primary{
+    background:var(--amber);
+    color:#14110a;
+    border-color:var(--amber);
+    font-weight:600;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(242,169,59,0.22);}
+  .btn-ghost{color:var(--text-muted);}
+  .btn-ghost:hover{color:var(--text);border-color:var(--text-dim);}
+
+  .status-chip{
+    background:var(--surface);
+    border:1px solid var(--rule);
+    color:var(--teal);
+    font-family:var(--mono);
+    font-size:11px;
+    padding:5px 10px;
+    border-radius:20px;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .status-chip .d{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:blink 2.4s infinite;}
+
+  /* terminal readout */
+  .terminal{
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:8px;
+    overflow:hidden;
+    margin-top:52px;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,0.6);
+  }
+  .terminal-bar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 14px;
+    border-bottom:1px solid var(--rule);
+    background:var(--surface-2);
+  }
+  .terminal-bar span{width:10px;height:10px;border-radius:50%;background:#3a3f4a;}
+  .terminal-title{
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--text-dim);
+    margin-left:6px;
+  }
+  .terminal-body{
+    padding:20px 22px 24px;
+    font-family:var(--mono);
+    font-size:13px;
+    min-height:168px;
+  }
+  .tline{
+    display:flex;
+    gap:10px;
+    margin-bottom:9px;
+    opacity:0;
+    color:var(--text-muted);
+  }
+  .tline .tag{
+    flex-shrink:0;
+    font-weight:700;
+  }
+  .tag.ok{color:var(--teal);}
+  .tag.warn{color:var(--amber);}
+  .cursor{
+    display:inline-block;
+    width:7px;height:14px;
+    background:var(--teal);
+    margin-left:2px;
+    animation:blink 1s steps(2) infinite;
+    vertical-align:-2px;
+  }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+  }
+  @media(max-width:760px){.about-grid{grid-template-columns:1fr;}}
+  .about-card{
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:8px;
+    padding:28px 26px;
+  }
+  .about-card h3{
+    font-family:var(--mono);
+    font-size:15px;
+    margin-bottom:14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .about-card.break h3{color:var(--red);}
+  .about-card.build h3{color:var(--teal);}
+  .about-card p{color:var(--text-muted);font-size:15px;}
+  .about-tail{
+    grid-column:1/-1;
+    color:var(--text-muted);
+    font-size:15.5px;
+    max-width:76ch;
+    margin-top:6px;
+  }
+  .about-tail strong{color:var(--text);}
+
+  /* ---------- experience ---------- */
+  .exp-item{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    gap:30px;
+    padding:30px 0;
+    border-top:1px solid var(--rule);
+  }
+  .exp-item:last-child{border-bottom:none;}
+  @media(max-width:700px){
+    .exp-item{grid-template-columns:1fr;gap:10px;}
+  }
+  .exp-meta{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-dim);
+  }
+  .exp-meta .badge{
+    display:inline-block;
+    font-size:10.5px;
+    padding:3px 8px;
+    border-radius:20px;
+    margin-top:10px;
+    font-weight:600;
+    letter-spacing:0.03em;
+  }
+  .badge.complete{color:var(--teal);border:1px solid rgba(79,209,174,0.4);background:rgba(79,209,174,0.07);}
+  .badge.active{color:var(--amber);border:1px solid rgba(242,169,59,0.4);background:rgba(242,169,59,0.07);}
+  .exp-role{font-size:19px;font-weight:700;margin-bottom:4px;}
+  .exp-org{color:var(--text-muted);font-size:14.5px;margin-bottom:14px;}
+  .exp-org .sep{margin:0 6px;color:var(--text-dim);}
+  .exp-desc{color:var(--text-muted);font-size:15px;margin-bottom:14px;max-width:64ch;}
+  .exp-tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .exp-tags span{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-muted);
+    border:1px solid var(--rule);
+    padding:4px 9px;
+    border-radius:4px;
+  }
+
+  /* ---------- skills ---------- */
+  .skill-groups{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:24px;
+  }
+  @media(max-width:700px){.skill-groups{grid-template-columns:1fr;}}
+  .skill-card{
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:8px;
+    padding:24px;
+  }
+  .skill-card.learning{border-style:dashed;}
+  .skill-card h3{
+    font-family:var(--mono);
+    font-size:13.5px;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    margin-bottom:16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    color:var(--text-muted);
+  }
+  .skill-card h3 .tick{color:var(--teal);font-family:var(--mono);font-size:12px;}
+  .skill-card.learning h3 .tick{color:var(--amber);}
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    font-size:13px;
+    padding:6px 12px;
+    border-radius:20px;
+    background:var(--surface-2);
+    color:var(--text);
+    border:1px solid var(--rule);
+  }
+  .skill-card.learning .chip{color:var(--text-muted);}
+
+  /* ---------- education ---------- */
+  .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  @media(max-width:700px){.edu-grid{grid-template-columns:1fr;}}
+  .edu-card{
+    border:1px solid var(--rule);
+    border-radius:8px;
+    padding:24px;
+    background:var(--surface);
+  }
+  .edu-card .school{font-weight:700;font-size:16px;margin-bottom:6px;}
+  .edu-card .deg{color:var(--text-muted);font-size:14.5px;margin-bottom:10px;}
+  .edu-card .yrs{font-family:var(--mono);font-size:12px;color:var(--text-dim);}
+  .cert-line{
+    margin-top:20px;
+    padding-top:18px;
+    border-top:1px dashed var(--rule);
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--text-muted);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .cert-line .tick{color:var(--teal);}
+
+  /* ---------- building now ---------- */
+  .build-grid{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+  .build-card{
+    border:1px solid var(--rule);
+    border-radius:8px;
+    padding:30px 28px;
+    background:linear-gradient(180deg, var(--surface), var(--surface-2));
+    position:relative;
+  }
+  .build-card .badge.active{position:absolute;top:24px;right:24px;}
+  .build-card h3{font-size:20px;font-weight:700;margin-bottom:10px;max-width:80%;}
+  .build-card p{color:var(--text-muted);font-size:15px;max-width:64ch;margin-bottom:16px;}
+  .build-meta{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-dim);
+  }
+  .build-meta b{color:var(--text-muted);font-weight:600;}
+
+  .badge-btn{
+    cursor:pointer;
+    font-family:var(--mono);
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    transition:background .2s, border-color .2s;
+  }
+  .badge-btn .chev{
+    display:inline-block;
+    font-size:9px;
+    transition:transform .25s ease;
+  }
+  .badge-btn:hover{background:rgba(242,169,59,0.14);}
+  .badge-btn:focus-visible{outline:2px solid var(--amber);outline-offset:2px;}
+  .badge-btn[aria-expanded="true"] .chev{transform:rotate(180deg);}
+
+  .build-details{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .4s ease;
+  }
+  .build-details.open{max-height:900px;}
+  .detail-inner{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    padding-top:20px;
+    margin-top:16px;
+    border-top:1px dashed var(--rule);
+  }
+  @media(max-width:640px){
+    .detail-inner{grid-template-columns:1fr;}
+  }
+  .detail-col h4{
+    font-family:var(--mono);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--amber);
+    margin-bottom:10px;
+  }
+  .detail-col ul{list-style:none;}
+  .detail-col li{
+    font-size:13.5px;
+    color:var(--text-muted);
+    padding-left:16px;
+    position:relative;
+    margin-bottom:9px;
+  }
+  .detail-col li::before{
+    content:'›';
+    position:absolute;
+    left:0;
+    color:var(--teal);
+    font-family:var(--mono);
+  }
+  .detail-note{
+    margin-top:6px;
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--text-dim);
+  }
+
+  /* ---------- contact ---------- */
+  #contact{border-bottom:none;padding-bottom:70px;}
+  .contact-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+  }
+  .contact-card{
+    border:1px solid var(--rule);
+    border-radius:8px;
+    padding:22px;
+    background:var(--surface);
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    transition:border-color .2s, transform .2s;
+  }
+  .contact-card:hover{border-color:var(--teal);transform:translateY(-3px);}
+  .contact-card .label{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+  .contact-card .value{font-size:15px;font-weight:600;word-break:break-word;}
+  .copy-note{font-family:var(--mono);font-size:11px;color:var(--teal);opacity:0;transition:opacity .2s;}
+  .copy-note.show{opacity:1;}
+
+  footer{
+    padding:34px 0 50px;
+    text-align:center;
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--text-dim);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<header>
+  <nav class="wrap">
+    <div class="brand"><span class="dot"></span>thulasidharan@portfolio</div>
+    <div class="navlinks">
+      <a href="#about">about</a>
+      <a href="#experience">experience</a>
+      <a href="#skills">skills</a>
+      <a href="#building">building</a>
+      <a href="#contact">contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section id="hero">
+    <div class="wrap hero-solo">
+      <div class="kicker-row">
+        <div class="kicker">Chennai, India</div>
+        <div class="status-chip"><span class="d"></span>open to work</div>
+      </div>
+      <h1>Thulasidharan V S<br><span class="accent">breaks</span> systems on purpose,<br>then makes sure they don't break again.</h1>
+      <p class="lede">Dual-degree CS student — <strong>B.Tech CSE at SRM</strong> and <strong>BS Data Science at IIT Madras</strong> — currently working across AI evaluation, QA automation, and an aspiring path into <strong>Cloud &amp; DevOps engineering</strong>.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#contact">Get in touch →</a>
+        <a class="btn btn-ghost" href="https://github.com/thuluxx" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/thulasidharanvs/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://leetcode.com/u/ZD2vTXRWlU/" target="_blank" rel="noopener">LeetCode</a>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span></span><span></span><span></span>
+          <div class="terminal-title">status.log</div>
         </div>
-
-        <div class="build-details" id="detail-voltsight">
-
-          <div class="detail-inner">
-
-            <div class="detail-col">
-              <h4>Hardware (EEE)</h4>
-
-              <ul>
-                <li>ESP32 Microcontroller</li>
-                <li>Temperature Sensor (DS18B20)</li>
-                <li>Current Sensor (ACS712)</li>
-                <li>Vibration Sensor</li>
-                <li>Breadboard & Wiring</li>
-                <li>Wi-Fi data transmission</li>
-              </ul>
-            </div>
-
-            <div class="detail-col">
-              <h4>Software (CSE)</h4>
-
-              <ul>
-                <li>FastAPI REST Backend</li>
-                <li>React Dashboard</li>
-                <li>PostgreSQL Database</li>
-                <li>Docker Development Environment</li>
-                <li>Real-time Motor Monitoring</li>
-                <li>Cloud Deployment (planned)</li>
-              </ul>
-            </div>
-
-          </div>
-
-          <div class="detail-note">
-            Predictive maintenance prototype focused on monitoring motor health,
-            preventing unexpected failures, and building an end-to-end IoT cloud
-            platform while learning modern backend and DevOps practices.
-          </div>
-
+        <div class="terminal-body" id="termBody">
+          <div class="tline" data-tag="OK" data-tagclass="ok" data-text="loading profile: Thulasidharan V S"></div>
+          <div class="tline" data-tag="OK" data-tagclass="ok" data-text="role: AI Evaluation Specialist @ Handshake"></div>
+          <div class="tline" data-tag="OK" data-tagclass="ok" data-text="role: QA Automation Engineer @ Aideah Data Works"></div>
+          <div class="tline" data-tag="OK" data-tagclass="ok" data-text="education: IIT Madras (BS Data Science) + SRM (B.Tech CSE)"></div>
+          <div class="tline" data-tag="WARN" data-tagclass="warn" data-text="cloud &amp; devops skills: AWS SAA, Terraform, Linux, Docker — in progress"></div>
+          <div class="tline" data-tag="OK" data-tagclass="ok" data-text="connection secured. scroll to continue"></div>
         </div>
+      </div>
+    </div>
+  </section>
 
+  <section id="about">
+    <div class="wrap">
+      <div class="eyebrow">about</div>
+      <h2 class="title reveal">Two very different worlds</h2>
+      <div class="about-grid">
+        <div class="about-card break reveal">
+          <h3>[ break ]</h3>
+          <p>As an AI Evaluation Specialist, I red-team frontier language models — designing adversarial prompts to uncover reasoning failures, building structured evaluation criteria, and researching authoritative sources to test genuine reasoning over memorized knowledge.</p>
+        </div>
+        <div class="about-card build reveal">
+          <h3>[ build ]</h3>
+          <p>As a QA Automation Engineer, I make sure things don't break — writing Playwright suites from scratch for enterprise platforms, running JMeter load tests at scale, and catching production issues before release.</p>
+        </div>
+        <p class="about-tail reveal">I'm currently strengthening my foundation in <strong>C++, Data Structures &amp; Algorithms, Linux, Cloud Computing, and DevOps</strong>, working toward becoming a Cloud &amp; DevOps Engineer — while continuing to explore Generative AI, because I like understanding how intelligent systems behave, fail, and improve. Open to internships and opportunities in Cloud, DevOps, Software Engineering, and AI Systems.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="eyebrow">experience</div>
+      <h2 class="title reveal">Log</h2>
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          Jul 2026 · 1 mo<br>Remote
+          <div class="badge complete">complete</div>
+        </div>
+        <div>
+          <div class="exp-role">AI Evaluation Specialist</div>
+          <div class="exp-org">Handshake <span class="sep">·</span> Freelance (Handshake AI Fellowship)</div>
+          <p class="exp-desc">Evaluated frontier LLMs for reasoning quality, factual accuracy, instruction adherence, and response reliability across complex, web-grounded tasks. Designed adversarial evaluation prompts to uncover reasoning failures and edge cases, and authored gold-standard reference solutions used to benchmark model performance.</p>
+          <div class="exp-tags">
+            <span>AI Evaluation</span><span>Prompt Engineering</span><span>Model Performance Analysis</span><span>LLMs</span><span>Research</span>
+          </div>
+        </div>
       </div>
 
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          May – Jun 2026 · 2 mos<br>Chennai · On-site
+          <div class="badge complete">complete</div>
+        </div>
+        <div>
+          <div class="exp-role">Quality Assurance Automation Engineer</div>
+          <div class="exp-org">Aideah Data Works <span class="sep">·</span> Internship</div>
+          <p class="exp-desc">Built Playwright automation suites from scratch across two enterprise platforms — AI Optix (visual inspection) and AuditVista (audit management), covering login, org &amp; role setup, workflows, and reporting. Ran JMeter load tests up to 10,000 concurrent users and identified production issues before release, including an AWS-related bug traced to a single underscore in a component name.</p>
+          <div class="exp-tags">
+            <span>Playwright</span><span>JMeter</span><span>Test Automation</span><span>Software Testing</span><span>Debugging</span>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="eyebrow">skills</div>
+      <h2 class="title reveal">Capability check</h2>
+      <div class="skill-groups">
+        <div class="skill-card reveal">
+          <h3>Testing &amp; QA <span class="tick">[✓]</span></h3>
+          <div class="chip-row">
+            <span class="chip">Playwright</span><span class="chip">JMeter</span><span class="chip">Test Automation</span><span class="chip">Software Testing</span><span class="chip">Debugging</span><span class="chip">Quality Assurance</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h3>AI &amp; Evaluation <span class="tick">[✓]</span></h3>
+          <div class="chip-row">
+            <span class="chip">AI Evaluation</span><span class="chip">Prompt Engineering</span><span class="chip">Model Performance Analysis</span><span class="chip">Large Language Models</span><span class="chip">Research Skills</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h3>Languages &amp; Tools <span class="tick">[✓]</span></h3>
+          <div class="chip-row">
+            <span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">C++</span><span class="chip">Linux</span>
+          </div>
+        </div>
+        <div class="skill-card learning reveal">
+          <h3>Cloud &amp; DevOps <span class="tick">[…]</span></h3>
+          <div class="chip-row">
+            <span class="chip">AWS Solutions Architect Associate</span><span class="chip">Terraform</span><span class="chip">Docker</span><span class="chip">DevOps Tooling</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="wrap">
+      <div class="eyebrow">education</div>
+      <h2 class="title reveal">Foundation</h2>
+      <div class="edu-grid">
+        <div class="edu-card reveal">
+          <div class="school">Indian Institute of Technology, Madras</div>
+          <div class="deg">Bachelor of Science, Data Science and Application</div>
+          <div class="yrs">Sep 2025 — Sep 2029</div>
+        </div>
+        <div class="edu-card reveal">
+          <div class="school">SRM Institute of Science and Technology</div>
+          <div class="deg">Bachelor of Technology, Computer Science</div>
+          <div class="yrs">Aug 2025 — Sep 2029</div>
+        </div>
+      </div>
+      <div class="cert-line reveal"><span class="tick">✓</span> Getting Started with Artificial Intelligence — IBM, issued Jan 2026</div>
+    </div>
+  </section>
+
+  <section id="building">
+    <div class="wrap">
+      <div class="eyebrow">currently building</div>
+      <h2 class="title reveal">In progress</h2>
+
+      <div class="build-grid">
+        <div class="build-card reveal">
+          <button class="badge badge-btn active" aria-expanded="false" aria-controls="detail-glove">
+            active <span class="chev">▾</span>
+          </button>
+          <h3>On-device sign language translator glove</h3>
+          <p>A Design Thinking team project built as a physical prototype rather than a website or app: a glove using flex sensors and an IMU, with a TinyML model classifying ISL/ASL gestures on-device and speaking the translated output through a speaker.</p>
+          <div class="build-meta">
+            <span><b>Type</b> · Team project, physical prototype</span>
+            <span><b>Stack</b> · Flex sensors, IMU, TinyML</span>
+          </div>
+          <div class="build-details" id="detail-glove">
+            <div class="detail-inner">
+              <div class="detail-col">
+                <h4>Hardware</h4>
+                <ul>
+                  <li>Flex sensors — per-finger gesture capture</li>
+                  <li>IMU — hand orientation and motion tracking</li>
+                  <li>Speaker — speaks the translated output aloud</li>
+                </ul>
+              </div>
+              <div class="detail-col">
+                <h4>Software</h4>
+                <ul>
+                  <li>On-device TinyML model classifying ISL/ASL gestures</li>
+                  <li>No cloud dependency — runs fully on-device</li>
+                </ul>
+              </div>
+            </div>
+            <div class="detail-note">Budget for the physical prototype: ~₹5,000</div>
+          </div>
+        </div>
+
+        <div class="build-card reveal">
+          <button class="badge badge-btn active" aria-expanded="false" aria-controls="detail-helmet">
+            active <span class="chev">▾</span>
+          </button>
+          <h3>Smart safety helmet — crash &amp; drowsiness detection</h3>
+          <p>A combined hardware project merging crash detection and drowsiness detection into a single two-wheeler safety helmet, built around an ESP32 controller with motion sensing, eye-closure detection, and automatic SOS alerts.</p>
+          <div class="build-meta">
+            <span><b>Type</b> · Hardware / IoT prototype</span>
+            <span><b>Stack</b> · ESP32, MPU6050, GPS + GSM</span>
+          </div>
+          <div class="build-details" id="detail-helmet">
+            <div class="detail-inner">
+              <div class="detail-col">
+                <h4>Hardware</h4>
+                <ul>
+                  <li>ESP32 — main controller (WiFi/BT built in)</li>
+                  <li>MPU6050 accelerometer/gyro — detects crash via G-force spike, and head-tilt for drowsiness</li>
+                  <li>IR eye-blink sensor — detects prolonged eye closure</li>
+                  <li>GPS module (NEO-6M) — location for SOS</li>
+                  <li>GSM module (SIM800L) or Blynk over BT — sends the alert</li>
+                  <li>Buzzer — immediate in-helmet warning before escalating</li>
+                  <li>Alcohol sensor (MQ-3) — optional, blocks bike start if drunk</li>
+                  <li>Push button — manual "I'm fine" cancel to avoid false-alarm spam</li>
+                </ul>
+              </div>
+              <div class="detail-col">
+                <h4>Software logic</h4>
+                <ul>
+                  <li>Crash trigger: G-force threshold exceeded + no motion after → auto SOS</li>
+                  <li>Drowsiness trigger: eyes closed 2–3s or head-tilt pattern → buzzer warning first, escalates if ignored</li>
+                  <li>SOS flow: GPS coordinates + alert message sent via GSM/app to an emergency contact</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="eyebrow">contact</div>
+      <h2 class="title reveal">Open a connection</h2>
+      <div class="contact-grid">
+        <a class="contact-card reveal" href="mailto:thulasidharan.perumalvs@gmail.com" id="emailCard">
+          <div class="label">Email</div>
+          <div class="value">thulasidharan.perumalvs@gmail.com</div>
+          <div class="copy-note" id="copyNote">copied to clipboard</div>
+        </a>
+        <a class="contact-card reveal" href="https://github.com/thuluxx" target="_blank" rel="noopener">
+          <div class="label">GitHub</div>
+          <div class="value">github.com/thuluxx</div>
+        </a>
+        <a class="contact-card reveal" href="https://www.linkedin.com/in/thulasidharanvs/" target="_blank" rel="noopener">
+          <div class="label">LinkedIn</div>
+          <div class="value">in/thulasidharanvs</div>
+        </a>
+        <a class="contact-card reveal" href="https://leetcode.com/u/ZD2vTXRWlU/" target="_blank" rel="noopener">
+          <div class="label">LeetCode</div>
+          <div class="value">u/ZD2vTXRWlU</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  built by Thulasidharan V S · Chennai, India · <span id="year"></span>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // terminal boot sequence
+  const lines = document.querySelectorAll('.tline');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function renderLine(el){
+    const tag = el.dataset.tag;
+    const tagClass = el.dataset.tagclass;
+    const text = el.dataset.text;
+    el.innerHTML = '<span class="tag ' + tagClass + '">[ ' + tag + ' ]</span><span>' + text + '</span>';
+  }
+
+  if(reduceMotion){
+    lines.forEach(el => { renderLine(el); el.style.opacity = 1; });
+  } else {
+    lines.forEach((el, i) => {
+      setTimeout(() => {
+        renderLine(el);
+        el.style.transition = 'opacity .35s ease';
+        el.style.opacity = 1;
+        if(i === lines.length - 1){
+          const cursor = document.createElement('span');
+          cursor.className = 'cursor';
+          el.appendChild(cursor);
+        }
+      }, 260 + i * 420);
+    });
+  }
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // copy email
+  const emailCard = document.getElementById('emailCard');
+  const copyNote = document.getElementById('copyNote');
+  emailCard.addEventListener('click', (e) => {
+    if(navigator.clipboard){
+      e.preventDefault();
+      navigator.clipboard.writeText('thulasidharan.perumalvs@gmail.com').then(() => {
+        copyNote.classList.add('show');
+        setTimeout(() => copyNote.classList.remove('show'), 1600);
+        setTimeout(() => { window.location.href = 'mailto:thulasidharan.perumalvs@gmail.com'; }, 300);
+      });
+    }
+  });
+
+  // build card details toggle
+  document.querySelectorAll('.badge-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const panel = document.getElementById(btn.getAttribute('aria-controls'));
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      panel.classList.toggle('open', !isOpen);
+    });
+  });
+</script>
+
+</body>
+</html>
+
+
+Swap out the sign language translator glove and smart safety helmet and add our current project
