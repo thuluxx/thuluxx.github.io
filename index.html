@@ -57,6 +57,51 @@
     mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
   }
 
+  /* ---------- cursor-follow glow ---------- */
+  #cursor-glow{
+    position:fixed;
+    top:0;left:0;
+    width:420px;
+    height:420px;
+    margin-left:-210px;
+    margin-top:-210px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:2;
+    background:radial-gradient(circle, rgba(242,169,59,0.10) 0%, rgba(79,209,174,0.06) 38%, transparent 70%);
+    will-change:transform;
+    transition:opacity .3s ease;
+    opacity:0;
+  }
+  #cursor-glow.active{opacity:1;}
+
+  #cursor-dot{
+    position:fixed;
+    top:0;left:0;
+    width:8px;
+    height:8px;
+    margin-left:-4px;
+    margin-top:-4px;
+    border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 10px 2px rgba(79,209,174,0.6);
+    pointer-events:none;
+    z-index:200;
+    will-change:transform;
+    transition:opacity .3s ease, transform .15s ease;
+    opacity:0;
+  }
+  #cursor-dot.active{opacity:1;}
+  #cursor-dot.hover{
+    transform:scale(2.6);
+    background:var(--amber);
+    box-shadow:0 0 14px 3px rgba(242,169,59,0.55);
+  }
+
+  @media(hover:none){
+    #cursor-glow, #cursor-dot{display:none;}
+  }
+
   /* ---------- nav ---------- */
   header{
     position:fixed;
@@ -524,12 +569,15 @@
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
     html{scroll-behavior:auto;}
+    #cursor-glow, #cursor-dot{display:none;}
   }
 </style>
 </head>
 <body>
 
 <div class="bg-grid"></div>
+<div id="cursor-glow"></div>
+<div id="cursor-dot"></div>
 
 <header>
   <nav class="wrap">
@@ -655,7 +703,7 @@
         <div class="skill-card reveal">
           <h3>Languages &amp; Tools <span class="tick">[✓]</span></h3>
           <div class="chip-row">
-            <span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">C++</span><span class="chip">Linux</span>
+            <span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">C++</span><span class="chip">Linux</span><span class="chip">Git</span><span class="chip">GitHub</span>
           </div>
         </div>
         <div class="skill-card learning reveal">
@@ -831,6 +879,56 @@
       panel.classList.toggle('open', !isOpen);
     });
   });
+
+  // ---------- cursor-follow glow effect ----------
+  (function(){
+    if(window.matchMedia('(hover: none)').matches) return; // skip on touch devices
+
+    const glow = document.getElementById('cursor-glow');
+    const dot = document.getElementById('cursor-dot');
+    let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+    let glowX = mouseX, glowY = mouseY;
+    let dotX = mouseX, dotY = mouseY;
+    let active = false;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if(!active){
+        active = true;
+        glow.classList.add('active');
+        dot.classList.add('active');
+      }
+    });
+
+    document.addEventListener('mouseleave', () => {
+      active = false;
+      glow.classList.remove('active');
+      dot.classList.remove('active');
+    });
+
+    // hover state on interactive elements
+    const hoverTargets = document.querySelectorAll('a, button, .badge-btn');
+    hoverTargets.forEach(el => {
+      el.addEventListener('mouseenter', () => dot.classList.add('hover'));
+      el.addEventListener('mouseleave', () => dot.classList.remove('hover'));
+    });
+
+    function animate(){
+      // glow trails with more lag (heavier feel)
+      glowX += (mouseX - glowX) * 0.08;
+      glowY += (mouseY - glowY) * 0.08;
+      // dot trails tighter (snappier feel)
+      dotX += (mouseX - dotX) * 0.35;
+      dotY += (mouseY - dotY) * 0.35;
+
+      glow.style.transform = `translate(${glowX}px, ${glowY}px)`;
+      dot.style.transform = `translate(${dotX}px, ${dotY}px)` + (dot.classList.contains('hover') ? ' scale(2.6)' : '');
+
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  })();
 </script>
 
 </body>
